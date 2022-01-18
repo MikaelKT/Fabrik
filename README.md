@@ -19,3 +19,20 @@ O_11 = saugnapf an
 O_12 = kran saugnapf halter herunterfahren
 O_13 = ofentür nach oben
 O_14 = drücker zum material schubsen
+
+
+
+
+revpi.io.O_8.value = 1
+while revpi.io.I_6.value == 0:
+    pass
+revpi.io.O_8.value = 0
+
+
+
+1 bei lichtschranke heißt = nicht unterbrochen (also sie bekommt strom genau das gegenteil eines knopfes der bei 1 strom bekommt)
+0 bei lichtschranke heißt = unterbrochen (also sie bekommt kein strom)
+
+
+
+
