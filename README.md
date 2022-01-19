@@ -20,6 +20,8 @@ O_12 = kran saugnapf halter herunterfahren
 O_13 = ofentür nach oben
 O_14 = drücker zum material schubsen
 
+i_10 = drehtellererkennungsknopf
+
 
 
 

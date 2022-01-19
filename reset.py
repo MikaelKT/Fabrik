@@ -2,7 +2,7 @@ import revpimodio2
 
 revpi = revpimodio2.RevPiModIO(autorefresh = True)
 
-def turnalloff():
+def turn_all_off():
     revpi.io.O_1.value = 0
     revpi.io.O_2.value = 0
     revpi.io.O_3.value = 0
@@ -18,11 +18,8 @@ def turnalloff():
     revpi.io.O_13.value = 0
     revpi.io.O_14.value = 0
 
-revpi.handlesignalend(turnalloff)
+revpi.handlesignalend(turn_all_off)
 revpi.mainloop(blocking=False)
-revpi.io.O_10.value = 1
-
-revpi.handlesignalend(turnalloff)
 revpi.io.O_10.value = 1
 
 revpi.io.O_13.value = 1
