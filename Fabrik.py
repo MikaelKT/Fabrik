@@ -21,22 +21,16 @@ def turn_all_off():
     revpi.io.O_13.value = 0
     revpi.io.O_14.value = 0
 
-def kompressor_geht_an():
-    revpi.io.O_10.value = 1
-
-def kompressor_geht_aus():
-    revpi.io.O_10.value = 0
+def kompressor_geht_an(value):
+    revpi.io.O_10.value = value
 
 
 def warte_auf_block_gesetzt():
     while revpi.io.I_2.value == 1:
         pass
 
-def tür_öffnen():
-    revpi.io.O_13.value = 1
-
-def tür_schließen():
-    revpi.io.O_13.value = 0
+def tür_öffnen(value):
+    revpi.io.O_13.value = value
 
 def ofen_rein_fahren():
     revpi.io.O_5.value = 1
@@ -62,11 +56,8 @@ def saugnapf_halter_runterfahren():
 def saugnapf_halter_hochfahren():
     revpi.io.O_12.value = 0
 
-def saugnapf_an():
-    revpi.io.O_11.value = 1
-
-def saugnapf_aus():
-    revpi.io.O_11.value = 0
+def saugnapf_an(value):
+    revpi.io.O_11.value = value
 
 def block_brennen():
     revpi.io.O_13.value = 0
@@ -89,11 +80,8 @@ def drehteller_zur_säge_drehen():
         pass
     revpi.io.O_1.value = 0
 
-def polier_säge():
-    revpi.io.O_4.value = 1
-
-def polier_säge_aus():
-    revpi.io.O_4.value = 0
+def polier_säge(value):
+    revpi.io.O_4.value = value
 
 def drehteller_zum_fließband_drehen():
     revpi.io.O_1.value = 1
@@ -101,11 +89,8 @@ def drehteller_zum_fließband_drehen():
         pass
     revpi.io.O_1.value = 0
 
-def pusher():
-    revpi.io.O_14.value = 1
-
-def pusher_aus():
-    revpi.io.O_14.value = 0
+def pusher(value):
+    revpi.io.O_14.value = value
 
 def drehteller_zum_start_drehen():
     revpi.io.O_2.value = 1
@@ -129,9 +114,9 @@ while True:
     
     warte_auf_block_gesetzt()
 
-    kompressor_geht_an()
+    kompressor_geht_an(1)
     
-    tür_öffnen()
+    tür_öffnen(1)
 
     ofen_rein_fahren()
 
@@ -139,7 +124,7 @@ while True:
 
     ofen_raus_fahren()
 
-    tür_schließen()
+    tür_öffnen(0)
 
     kran_links()
 
@@ -147,7 +132,7 @@ while True:
 
     time.sleep(1)
 
-    saugnapf_an()
+    saugnapf_an(1)
     
     time.sleep(1)
 
@@ -159,7 +144,7 @@ while True:
     
     time.sleep(1)
 
-    saugnapf_aus()
+    saugnapf_an(0)
 
     time.sleep(1)
     
@@ -169,21 +154,21 @@ while True:
     
     drehteller_zur_säge_drehen()
 
-    polier_säge()
+    polier_säge(1)
     
     time.sleep(4)
     
-    polier_säge_aus()
+    polier_säge(0)
 
     drehteller_zum_fließband_drehen()
 
-    pusher()
+    pusher(1)
 
     time.sleep(0.5)
     
-    pusher_aus()
+    pusher(0)
 
-    kompressor_geht_aus()
+    kompressor_geht_an(0)
     
     threading.Thread(target=drehteller_zum_start_drehen).start()
 
