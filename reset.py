@@ -40,4 +40,4 @@ revpi.io.O_2.value = 0
 
 
 
-revpi.mainloop(blocking=False)
+revpi.mainloop(blocking=Fals)
