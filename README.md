@@ -56,7 +56,7 @@ Factory is a program that brings Fischertechnik's 536632 to life.
 \
 O_1 = turntable rotates to the right\
 O_2 = turntable turns to the left\
-O_3 = conveyor belt
+O_3 = conveyor belt\
 O_4 = polisher(saw idk)\
 O_5 = oven retract\
 O_6 = oven exit\
