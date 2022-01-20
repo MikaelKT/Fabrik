@@ -3,12 +3,12 @@
 ## MASTER Table of contents
 * Welche Sprache/Which language ?
 * [German](#Fabrik)
-* [English](#Table-of-contents)
+* [English](#Factory)
 
 
 
 ## Inhaltsangabe
-* [](#without-pneumatics)
+* [Definitionen der Funktionen](#Hier-sind-die-Definitionen-der-Funktionen)
 
 Factory is a program that brings Fischertechnik's 536632 to life.
 
@@ -46,13 +46,13 @@ i_10 = drehtellererkennungsknopf\
 # Factory
 
 ## Table of contents
-* [Definitions of the functions](#without-pneumatics)
+* [Definitions of the functions](#Here-are-the-definitions-of-the-functions)
 
 Factory is a program that brings Fischertechnik's 536632 to life.
 
 #### Here are the definitions of the functions
-
-
+\
+\
 ## without pneumatics
 \
 O_1 = turntable rotates to the right\
