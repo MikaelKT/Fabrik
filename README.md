@@ -6,7 +6,6 @@
 * [English](#Factory)
 
 
-
 ## Inhaltsangabe
 * [Definitionen der Funktionen](#Hier-sind-die-Definitionen-der-Funktionen)
 
@@ -34,8 +33,8 @@ O_11 = saugnapf an\
 O_12 = kran saugnapf halter herunterfahren\
 O_13 = ofentür nach oben\
 O_14 = drücker zum material schubsen\
-\
-i_10 = drehtellererkennungsknopf\
+## andere Funktionen
+I_10 = drehtellererkennungsknopf\
 \
 \
 \
@@ -51,8 +50,8 @@ i_10 = drehtellererkennungsknopf\
 Factory is a program that brings Fischertechnik's 536632 to life.
 
 #### Here are the definitions of the functions
-\
-\
+
+
 ## without pneumatics
 \
 O_1 = turntable rotates to the right\
@@ -71,9 +70,9 @@ O_10 = compressor on
 O_11 = suction cup an\
 O_12 = crane suction cup holder down\
 O_13 = oven door up\
-O_14 = pusher to push material\
-\
-i_10 = turntable detection button\
+O_14 = pusher to push material
+## other functions
+I_10 = turntable detection button\
 \
 \
 \
