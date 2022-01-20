@@ -16,30 +16,30 @@ Factory is a program that brings Fischertechnik's 536632 to life.
 
 ## ohne Pneumatik
 \
-O_1 = drehteller dreht nach rechts\
-O_2 = drehteller dreht nach links\
-O_3 = fließband an\
-O_4 = polierer(säge idk)\
-O_5 = ofen reinfahren\
-O_6 = ofen ausfahren\
-O_7 = kran nach links\
-O_8 = kran nach rechts\
-O_9 = rote lampe (brenner)
+O_1 = Drehteller dreht nach rechts\
+O_2 = Drehteller dreht nach links\
+O_3 = Fließband an\
+O_4 = Polierer(Säge idk)\
+O_5 = Ofen reinfahren\
+O_6 = Ofen ausfahren\
+O_7 = Kran nach links\
+O_8 = Kran nach rechts\
+O_9 = rote Lampe (Brenner)
 
 ## mit Pneumatik
 \
-O_10 = kompressor an\
-O_11 = saugnapf an\
-O_12 = kran saugnapf halter herunterfahren\
-O_13 = ofentür nach oben\
-O_14 = drücker zum material schubsen\
+O_10 = Kompressor an\
+O_11 = Saugnapf an\
+O_12 = Kran Saugnapf halter herunterfahren\
+O_13 = Ofentür nach oben\
+O_14 = Drücker zum Material schubsen\
 ## andere Funktionen
-I_10 = drehtellererkennungsknopf\
+I_10 = Drehteller erkennungsknopf\
 \
 \
 \
-1 bei lichtschranke heißt = nicht unterbrochen (also sie bekommt strom)\
-0 bei lichtschranke heißt = unterbrochen (also sie bekommt kein strom)
+1 bei Lichtschranke heißt = nicht unterbrochen (also sie bekommt Strom)\
+0 bei Lichtschranke heißt = unterbrochen (also sie bekommt kein Strom)
 
 
 # Factory
@@ -72,7 +72,7 @@ O_12 = crane suction cup holder down\
 O_13 = oven door up\
 O_14 = pusher to push material
 ## other functions
-I_10 = turntable detection button\
+I_10 = turntable detectionbutton\
 \
 \
 \
