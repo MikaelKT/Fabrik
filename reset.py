@@ -37,7 +37,6 @@ while revpi.io.I_10.value == 0:
     pass
 revpi.io.O_2.value = 0
 
-
-
+revpi.io.O_10.value = 0
 
 revpi.mainloop(blocking=False)
