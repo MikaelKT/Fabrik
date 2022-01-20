@@ -1,5 +1,4 @@
 import threading
-from xml.sax.xmlreader import InputSource
 import revpimodio2
 import time
 
