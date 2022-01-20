@@ -9,7 +9,7 @@
 ## Inhaltsangabe
 * [Definitionen der Funktionen](#Hier-sind-die-Definitionen-der-Funktionen)
 
-Factory is a program that brings Fischertechnik's 536632 to life.
+Factory ist ein Programm das Fischertechnik's 536632 zum leben erweckt.
 
 #### Hier sind die Definitionen der Funktionen
 
