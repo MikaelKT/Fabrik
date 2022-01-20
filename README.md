@@ -2,8 +2,8 @@
 
 ## MASTER Table of contents
 * Welche Sprache/Which language ?
-* [German](#Fabrik)
-* [English](#Factory)
+    * [German](#Fabrik)
+    * [English](#Factory)
 
 
 ## Inhaltsangabe
