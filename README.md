@@ -1,6 +1,6 @@
 # Fabrik
 
-## MASTER Table of contents
+## MASTER Table of languages
 * Welche Sprache/Which language ?
     * [German](#Fabrik)
     * [English](#Factory)
