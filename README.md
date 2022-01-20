@@ -14,7 +14,7 @@ Factory is a program that brings Fischertechnik's 536632 to life.
 #### Hier sind die Definitionen der Funktionen
 
 
-## ohne pneumatik
+## ohne Pneumatik
 \
 O_1 = drehteller dreht nach rechts\
 O_2 = drehteller dreht nach links\
@@ -26,7 +26,7 @@ O_7 = kran nach links\
 O_8 = kran nach rechts\
 O_9 = rote lampe (brenner)
 
-## mit pneumatik
+## mit Pneumatik
 \
 O_10 = kompressor an\
 O_11 = saugnapf an\
