@@ -66,7 +66,7 @@ O_9 = red lamp (burner)
 
 ## with pneumatics
 \
-O_10 = compressor on
+O_10 = compressor on\
 O_11 = suction cup an\
 O_12 = crane suction cup holder down\
 O_13 = oven door up\
