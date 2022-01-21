@@ -8,13 +8,34 @@
 
 ## Inhaltsangabe
 * [Definitionen der Funktionen](#Hier-sind-die-Definitionen-der-Funktionen)
+* [Introduction](#Introduction)
 
-Factory ist ein Programm das Fischertechnik's 536632 zum leben erweckt.
+## Introduction
 
-#### Hier sind die Definitionen der Funktionen
+#### Factory ist ein Programm das Fischertechnik's 536632 zum leben erweckt.
+
+Alles was du dazu brauchst ist der Fischertechnik 526632, einen Pc, Python, ein Terminal und eine Entwicklungsumgebung
+
+## installation
+
+Als erstes installierst du eine Entwicklungsumgebung wie z.B vscode.
+Solltest du linux benutzen dann gib in einem Terminal
+
+``` bash
+sudo apt update
+```
+#### ein und danach gibst du
+``` bash
+sudo apt install code
+```
+#### ein.
+\
+solltest du irgendein anderes Betriebssystem benutzt dann installiere vscode einfach über die Website von microsoft.
+
+## Hier sind die Definitionen der Funktionen
 
 
-## ohne Pneumatik
+### ohne Pneumatik
 \
 O_1 = Drehteller dreht nach rechts\
 O_2 = Drehteller dreht nach links\
@@ -26,7 +47,7 @@ O_7 = Kran nach links\
 O_8 = Kran nach rechts\
 O_9 = rote Lampe (Brenner)
 
-## mit Pneumatik
+### mit Pneumatik
 \
 O_10 = Kompressor an\
 O_11 = Saugnapf an\
