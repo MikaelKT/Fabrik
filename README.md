@@ -1,8 +1,13 @@
 # Factory
 
 ## Summary
-* [Definitions of functions](#Here-are-the-definitions-of-functions)
 * [Introduction](#Introduction)
+* [Installation](#installation)
+     * [VS Code](#First-you-install-a-development-environment-like-VS-Code.)
+     * [Python](#python)
+* [Updates](#updates)
+* [Definitions of functions](#Here-are-the-definitions-of-the-functions)
+     * [Other Functions](#other-functions)
 
 #
 ## Introduction
