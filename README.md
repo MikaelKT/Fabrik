@@ -1,6 +1,6 @@
 # Factory
 
-## Summary
+## Table Of Contents
 * [Introduction](#Introduction)
 * [Installation](#installation)
      * [VS Code](#First-you-install-a-development-environment-like-VS-Code)
