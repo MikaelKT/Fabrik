@@ -28,6 +28,28 @@ sudo apt install code
 \
 if you are using a other device with a different operating system then you can also click on the [link](https://code.visualstudio.com/download) to download it from the official website
 
+### python
+
+
+#### Now you should install python.
+
+#### you can do it by clicking on the extension icon
+
+<img src="erweiterungssymbol.png"
+     style="float: ; margin-top: 0px;" />
+
+
+
+#### then type "Python" in the searchbar and then click on Python from the publisher microsoft
+
+
+
+<img src="pythonsearchbar.png"
+     style="float: ; margin-top: 0px;" />
+
+#### now click on install and wait for it finished
+
+#
 ## updates
 
 If you want to update VS Code you only have to write
