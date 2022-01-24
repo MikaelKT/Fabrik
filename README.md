@@ -3,7 +3,7 @@
 ## Summary
 * [Introduction](#Introduction)
 * [Installation](#installation)
-     * [VS Code](#First-you-install-a-development-environment-like-VS-Code.)
+     * [VS Code](#First-you-install-a-development-environment-like-VS-Code)
      * [Python](#python)
 * [Updates](#updates)
 * [Definitions of functions](#Here-are-the-definitions-of-the-functions)
