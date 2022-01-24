@@ -17,7 +17,33 @@
 All you need is the Fischertechnik factory 526632, a PC, Python, a terminal and a development environment.
 
 #
-## installation
+## Usage
+
+#### first open your Terminal and write
+```
+ssh pi@your_Factory_ip_adress
+```
+#### into the bar.(replace "your_Factory_ip_adress" with your Factory ip adress. After that it can be that you need to put in a password)
+
+#### now you must go into the folder where you saved the "Fabrik.py" file
+
+#### 
+```
+cd your_folder_where_Fabrik.py_is_saved
+```
+#### (replace "your_folder_where_Fabrik.py_is_saved" with your Factory ip adress.)
+#### now you can easily start the program with
+```
+python3 Fabrik.py
+```
+
+
+
+
+
+
+#
+## Installation
 
 #### First you install a development environment like VS Code
 #### If you use a raspberry pi then type in a terminal
@@ -33,7 +59,7 @@ sudo apt install code
 \
 if you are using a other device with a different operating system then you can also click on the [link](https://code.visualstudio.com/download) to download it from the official website
 
-### python
+### Python
 
 
 #### Now you should install python.
@@ -55,7 +81,7 @@ if you are using a other device with a different operating system then you can a
 #### now click on install and wait for it finished
 
 #
-## updates
+## Updates
 
 If you want to update VS Code you only have to write
 
@@ -74,10 +100,10 @@ By default VS Code is set up to auto-update for macOS and Windows users.
 
 
 #
-## Here are the definitions of the functions
+## Pin definition
 
-
-### without pneumatics
+##### the module revpimodio2 allows us direct access to the pins via their assigned name.
+### Without pneumatics
 \
 O_1 = turntable rotates to the right\
 O_2 = turntable turns to the left\
@@ -89,14 +115,14 @@ O_7 = Crane to the left\
 O_8 = crane to the right\
 O_9 = red lamp (burner)
 
-### with pneumatics
+### With pneumatics
 \
 O_10 = compressor on\
 O_11 = suction cup on\
 O_12 = crane suction cup holder down\
 O_13 = Furnace door up\
 O_14 = Pusher to push material
-## other functions
+## Other functions
 I_10 = turntable detection button\
 \
 \
