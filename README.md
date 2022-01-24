@@ -35,7 +35,7 @@ if you are using a other device with a different operating system then you can a
 
 #### you can do it by clicking on the extension icon
 
-<img src="erweiterungssymbol.png"
+<img src="images/erweiterungssymbol.png"
      style="float: ; margin-top: 0px;" />
 
 
@@ -44,7 +44,7 @@ if you are using a other device with a different operating system then you can a
 
 
 
-<img src="pythonsearchbar.png"
+<img src="images/pythonsearchbar.png"
      style="float: ; margin-top: 0px;" />
 
 #### now click on install and wait for it finished
