@@ -3,7 +3,7 @@
 ## Summary
 * [Introduction](#Introduction)
 * [Installation](#installation)
-     * [VS Code](#First-you-install-a-development-environment-like-VS-Code)
+     * [VS Code](#First-you-install-a-development-environment-like-VS-Code.)
      * [Python](#python)
 * [Updates](#updates)
 * [Definitions of functions](#Here-are-the-definitions-of-the-functions)
@@ -19,8 +19,8 @@ All you need is the Fischertechnik factory 526632, a PC, Python, a terminal and 
 #
 ## installation
 
-First you install a development environment like VS Code.
-If you use a raspberry pi then type in a terminal
+#### First you install a development environment like VS Code.
+#### If you use a raspberry pi then type in a terminal
 
 ```
 sudo apt update
