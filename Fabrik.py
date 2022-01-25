@@ -1,6 +1,13 @@
+from enum import Enum
 import threading
 import revpimodio2
 import time
+
+class Richtung(Enum):
+    LINKS = 1
+    RECHTS = 2
+    REIN = LINKS
+    RAUS = RECHTS
 
 revpi = revpimodio2.RevPiModIO(autorefresh = True)
 
@@ -20,6 +27,31 @@ def turn_all_off():
     revpi.io.O_13.value = 0
     revpi.io.O_14.value = 0
 
+
+def ist_kran_links():
+    return True if revpi.io.I_3.value == 1 and revpi.io.I_6.value == 0 else False
+
+def ist_kran_rechts():
+    return True if revpi.io.I_6.value == 1 and revpi.io.I_3.value == 0 else False
+
+def ist_ofen_drinn():
+    return True if revpi.io.I_5.value == 1 and revpi.io.I_4.value == 0 else False
+
+def ist_ofen_draußen():
+    return True if revpi.io.I_4.value == 1 and revpi.io.I_5.value == 0 else False
+
+def ist_fließband_sensor_durchbrochen():
+    return True if revpi.io.I_8.value == 0 and revpi.io.O_3.value == 0 else False
+
+def ist_drehteller_bei_polierer():
+    return True if revpi.io.I_7.value == 1 and revpi.io.I_9.value == 0 else False
+
+def ist_drehteller_bei_fließband():
+    return True if revpi.io.I_9.value == 1 and revpi.io.I_7.value == 0 else False
+
+def ist_drehteller_bei_start():
+    return True if revpi.io.I_10.value == 1 and revpi.io.I_7.value == 0 and revpi.io.I_9.value == 0 else False
+
 def kompressor_geht_an(value):
     revpi.io.O_10.value = value
 
@@ -30,24 +62,70 @@ def warte_auf_block_gesetzt():
 
 def tür_öffnen(value):
     revpi.io.O_13.value = value
+    
+def bewege_kran(richtung):
+    if richtung == Richtung.RECHTS and ist_kran_rechts() == False:
+        revpi.io.O_8.value = 1
+        while ist_kran_rechts() == False:
+            pass
+        revpi.io.O_8.value = 0
+    elif richtung == Richtung.LINKS and ist_kran_links() == False:
+        revpi.io.O_7.value = 1
+        while ist_kran_links() == False:
+            pass
+        revpi.io.O_7.value = 0
 
-def ofen_rein_fahren():
-    revpi.io.O_5.value = 1
-    while revpi.io.I_5.value == 0:
-        pass
-    revpi.io.O_5.value = 0
+def bewege_ofen(richtung):
+    if richtung == Richtung.REIN and ist_ofen_drinn() == False:
+        revpi.io.O_5.value = 1
+        while ist_ofen_drinn() == False:
+            pass
+        revpi.io.O_5.value = 0
+    elif richtung == Richtung.RAUS and ist_ofen_draußen() == False:
+        revpi.io.O_6.value = 1
+        while ist_ofen_draußen() == False:
+            pass
+        revpi.io.O_6.value = 0
 
-def ofen_raus_fahren():
-    revpi.io.O_6.value = 1
-    while revpi.io.I_4.value == 0:
+def bewege_drehteller_zum_polierer():
+    revpi.io.O_1.value = 1
+    while ist_drehteller_bei_polierer() == False:
         pass
-    revpi.io.O_6.value = 0
+    revpi.io.O_1.value = 0
 
-def kran_links():
-    revpi.io.O_7.value = 1
-    while revpi.io.I_3.value == 0:
+def bewege_drehteller_zum_fließband():
+    revpi.io.O_1.value = 1
+    while ist_drehteller_bei_fließband() == False:
         pass
-    revpi.io.O_7.value = 0
+    revpi.io.O_1.value = 0
+
+def bewege_drehteller_zum_kran():
+    revpi.io.O_2.value = 1
+    while ist_drehteller_bei_start() == False:
+        pass
+    revpi.io.O_2.value = 0
+    
+def bewege_drehteller(richtung):
+    if richtung == Richtung.RECHTS and ist_drehteller_bei_fließband() == False:
+        if richtung == Richtung.RECHTS and ist_drehteller_bei_start() == True:
+            bewege_drehteller_zum_polierer()
+        elif richtung == Richtung.RECHTS and ist_drehteller_bei_polierer() == True:
+            bewege_drehteller_zum_fließband()
+    elif richtung == Richtung.LINKS and ist_drehteller_bei_start() == False:
+        bewege_drehteller_zum_kran()
+
+def fließband_an(richtung):
+    if richtung == Richtung.RAUS and ist_fließband_sensor_durchbrochen() == False:
+        revpi.io.O_3.value = 1
+        while ist_fließband_sensor_durchbrochen() == False:
+            pass
+        revpi.io.O_3.value = 0
+
+def polierer(value):
+    revpi.io.O_4.value = value
+
+def pusher(value):
+    revpi.io.O_14.value = value
 
 def saugnapf_halter_runterfahren():
     revpi.io.O_12.value = 1
@@ -67,44 +145,6 @@ def block_brennen():
 
     revpi.io.O_13.value = 1
 
-def kran_rechts():
-    revpi.io.O_8.value = 1
-    while revpi.io.I_6.value == 0:
-        pass
-    revpi.io.O_8.value = 0
-
-def drehteller_zur_säge_drehen():
-    revpi.io.O_1.value = 1
-    while revpi.io.I_7.value == 0:
-        pass
-    revpi.io.O_1.value = 0
-
-def polier_säge(value):
-    revpi.io.O_4.value = value
-
-def drehteller_zum_fließband_drehen():
-    revpi.io.O_1.value = 1
-    while revpi.io.I_9.value == 0:
-        pass
-    revpi.io.O_1.value = 0
-
-def pusher(value):
-    revpi.io.O_14.value = value
-
-def drehteller_zum_start_drehen():
-    revpi.io.O_2.value = 1
-    while revpi.io.I_10.value == 0:
-        pass
-    revpi.io.O_2.value = 0
-
-def fließband_an_solange_kein_block_ist():
-    revpi.io.O_3.value = 1
-    while revpi.io.I_8.value == 1:
-        pass
-    revpi.io.O_3.value = 0
-
-
-
 
 revpi.handlesignalend(turn_all_off)
 revpi.mainloop(blocking=False)
@@ -116,16 +156,16 @@ while True:
     kompressor_geht_an(1)
     
     tür_öffnen(1)
-
-    ofen_rein_fahren()
+    
+    bewege_ofen(Richtung.REIN)
 
     block_brennen()
 
-    ofen_raus_fahren()
+    bewege_ofen(Richtung.RAUS)
 
     tür_öffnen(0)
 
-    kran_links()
+    bewege_kran(Richtung.LINKS)
 
     saugnapf_halter_runterfahren()
 
@@ -137,7 +177,7 @@ while True:
 
     saugnapf_halter_hochfahren()
 
-    kran_rechts()
+    bewege_kran(Richtung.RECHTS)
 
     saugnapf_halter_runterfahren()
     
@@ -151,15 +191,15 @@ while True:
 
     time.sleep(1)
     
-    drehteller_zur_säge_drehen()
+    bewege_drehteller(Richtung.RECHTS)
 
-    polier_säge(1)
+    polierer(1)
     
     time.sleep(4)
     
-    polier_säge(0)
+    polierer(0)
 
-    drehteller_zum_fließband_drehen()
+    bewege_drehteller(Richtung.RECHTS)
 
     pusher(1)
 
@@ -169,6 +209,6 @@ while True:
 
     kompressor_geht_an(0)
     
-    threading.Thread(target=drehteller_zum_start_drehen).start()
+    threading.Thread(target=bewege_drehteller(Richtung.LINKS)).start()
 
-    threading.Thread(target=fließband_an_solange_kein_block_ist).start()
+    threading.Thread(target=fließband_an(Richtung.RAUS)).start()
