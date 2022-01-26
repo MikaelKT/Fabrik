@@ -9,6 +9,10 @@ class Richtung(Enum):
     REIN = LINKS
     RAUS = RECHTS
 
+class Strom(Enum):
+    AN = 1
+    AUS = 0
+
 revpi = revpimodio2.RevPiModIO(autorefresh = True)
 
 def turn_all_off():
@@ -43,6 +47,9 @@ def ist_ofen_draußen():
 def ist_fließband_sensor_durchbrochen():
     return True if revpi.io.I_8.value == 0 else False
 
+def ist_kompressor_an():
+    return True if revpi.io.O_10.value == 1 else False
+
 def ist_drehteller_bei_polierer():
     return True if revpi.io.I_7.value == 1 and revpi.io.I_9.value == 0 else False
 
@@ -52,8 +59,11 @@ def ist_drehteller_bei_fließband():
 def ist_drehteller_bei_start():
     return True if revpi.io.I_10.value == 1 and revpi.io.I_7.value == 0 and revpi.io.I_9.value == 0 else False
 
-def kompressor_geht_an(value):
-    revpi.io.O_10.value = value
+def schalte_kompressor(strom):
+    if strom == Strom.AN and ist_kompressor_an() == False:
+        revpi.io.O_10.value = 1
+    elif strom == Strom.AUS and ist_kompressor_an() == True:
+        revpi.io.O_10.value = 0
 
 
 def warte_auf_block_gesetzt():
@@ -145,15 +155,28 @@ def block_brennen():
 
     revpi.io.O_13.value = 1
 
+def reset_all():
+    revpi.io.O_10.value = 0
+    if ist_ofen_drinn == True:
+        revpi.io.O_13.value = 1
+        bewege_ofen(Richtung.RAUS)
+    if ist_kran_links == True:
+        bewege_kran(Richtung.RECHTS)
+    if ist_drehteller_bei_start == False:
+        bewege_drehteller(Richtung.LINKS)
+    if
+
 
 revpi.handlesignalend(turn_all_off)
 revpi.mainloop(blocking=False)
+
+
 
 while True:
     
     warte_auf_block_gesetzt()
 
-    kompressor_geht_an(1)
+    schalte_kompressor(Strom.AN)
     
     tür_öffnen(1)
     
@@ -207,7 +230,7 @@ while True:
     
     pusher(0)
 
-    kompressor_geht_an(0)
+    schalte_kompressor(Strom.AUS)
     
     th = Thread(target=bewege_drehteller(Richtung.LINKS))
     th.start()
