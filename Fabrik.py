@@ -159,12 +159,16 @@ def block_brennen():
     revpi.io.O_13.value = 1
 
 def reset_all():
-    if ist_ofen_draußen2() == False:
+    schalte_kompressor(Strom.AN)
+    if ist_ofen_draußen() == False:
         revpi.io.O_13.value = 1
         bewege_ofen(Richtung.RAUS)
         revpi.io.O_13.value = 0
     bewege_kran(Richtung.RECHTS)
-    bewege_drehteller(Richtung.LINKS)
+    if ist_drehteller_bei_start() == False:
+        bewege_drehteller_zum_kran()
+    if ist_ofen_draußen() == True and ist_drehteller_bei_start() == True and ist_kran_rechts() == True and ist_kompressor_an() == True:
+        return True
 
 
 revpi.handlesignalend(turn_all_off)
@@ -174,67 +178,68 @@ revpi.mainloop(blocking=False)
 
 while True:
     
-    schalte_kompressor(Strom.AN)
+    if reset_all() == True:
+        
 
-    reset_all()
+        schalte_kompressor(Strom.AN)
 
-    warte_auf_block_gesetzt()
-    
-    tür_öffnen(1)
-    
-    bewege_ofen(Richtung.REIN)
+        warte_auf_block_gesetzt()
+        
+        tür_öffnen(1)
+        
+        bewege_ofen(Richtung.REIN)
 
-    block_brennen()
+        block_brennen()
 
-    bewege_ofen(Richtung.RAUS)
+        bewege_ofen(Richtung.RAUS)
 
-    tür_öffnen(0)
+        tür_öffnen(0)
 
-    bewege_kran(Richtung.LINKS)
+        bewege_kran(Richtung.LINKS)
 
-    saugnapf_halter_runterfahren()
+        saugnapf_halter_runterfahren()
 
-    time.sleep(1)
+        time.sleep(1)
 
-    saugnapf_an(1)
-    
-    time.sleep(1)
+        saugnapf_an(1)
+        
+        time.sleep(1)
 
-    saugnapf_halter_hochfahren()
+        saugnapf_halter_hochfahren()
 
-    bewege_kran(Richtung.RECHTS)
+        bewege_kran(Richtung.RECHTS)
 
-    saugnapf_halter_runterfahren()
-    
-    time.sleep(1)
+        saugnapf_halter_runterfahren()
+        
+        time.sleep(1)
 
-    saugnapf_an(0)
+        saugnapf_an(0)
 
-    time.sleep(1)
-    
-    saugnapf_halter_hochfahren()
+        time.sleep(1)
+        
+        saugnapf_halter_hochfahren()
 
-    time.sleep(1)
-    
-    bewege_drehteller(Richtung.RECHTS)
+        time.sleep(1)
+        
+        bewege_drehteller(Richtung.RECHTS)
 
-    polierer(1)
-    
-    time.sleep(4)
-    
-    polierer(0)
+        polierer(1)
+        
+        time.sleep(4)
+        
+        polierer(0)
 
-    bewege_drehteller(Richtung.RECHTS)
+        bewege_drehteller(Richtung.RECHTS)
 
-    pusher(1)
+        pusher(1)
 
-    time.sleep(0.5)
-    
-    pusher(0)
+        time.sleep(0.5)
+        
+        pusher(0)
 
-    schalte_kompressor(Strom.AUS)
-    
-    th = Thread(target=bewege_drehteller(Richtung.LINKS))
-    th.start()
-    th1=Thread(target=fließband_an(Richtung.RAUS))
-    th1.start()
+        schalte_kompressor(Strom.AUS)
+        
+        th = Thread(target=bewege_drehteller(Richtung.LINKS))
+        th.start()
+        th1=Thread(target=fließband_an(Richtung.RAUS))
+        th1.start()
