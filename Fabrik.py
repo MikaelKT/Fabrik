@@ -43,6 +43,9 @@ def ist_ofen_drinn():
 
 def ist_ofen_draußen():
     return True if revpi.io.I_4.value == 1 and revpi.io.I_5.value == 0 else False
+    
+def ist_ofen_draußen2():
+    return True if revpi.io.I_4.value == 1 else False
 
 def ist_fließband_sensor_durchbrochen():
     return True if revpi.io.I_8.value == 0 else False
@@ -156,15 +159,12 @@ def block_brennen():
     revpi.io.O_13.value = 1
 
 def reset_all():
-    revpi.io.O_10.value = 0
-    if ist_ofen_drinn == True:
+    if ist_ofen_draußen2() == False:
         revpi.io.O_13.value = 1
         bewege_ofen(Richtung.RAUS)
-    if ist_kran_links == True:
-        bewege_kran(Richtung.RECHTS)
-    if ist_drehteller_bei_start == False:
-        bewege_drehteller(Richtung.LINKS)
-    if
+        revpi.io.O_13.value = 0
+    bewege_kran(Richtung.RECHTS)
+    bewege_drehteller(Richtung.LINKS)
 
 
 revpi.handlesignalend(turn_all_off)
@@ -174,9 +174,11 @@ revpi.mainloop(blocking=False)
 
 while True:
     
-    warte_auf_block_gesetzt()
-
     schalte_kompressor(Strom.AN)
+
+    reset_all()
+
+    warte_auf_block_gesetzt()
     
     tür_öffnen(1)
     
