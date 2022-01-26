@@ -31,7 +31,7 @@ ssh pi@your_Factory_ip_adress
 ```
 cd your_folder_where_Fabrik.py_is_saved
 ```
-#### (replace "your_folder_where_Fabrik.py_is_saved" with your Factory ip adress.)
+#### (replace "your_folder_where_Fabrik.py_is_saved" with your Factory folder where the Fabrik.py file is.)
 #### now you can easily start the program with
 ```
 python3 Fabrik.py
