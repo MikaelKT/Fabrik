@@ -1,5 +1,5 @@
 from enum import Enum
-import threading
+from threading import Thread
 import revpimodio2
 import time
 
@@ -41,7 +41,7 @@ def ist_ofen_draußen():
     return True if revpi.io.I_4.value == 1 and revpi.io.I_5.value == 0 else False
 
 def ist_fließband_sensor_durchbrochen():
-    return True if revpi.io.I_8.value == 0 and revpi.io.O_3.value == 0 else False
+    return True if revpi.io.I_8.value == 0 else False
 
 def ist_drehteller_bei_polierer():
     return True if revpi.io.I_7.value == 1 and revpi.io.I_9.value == 0 else False
@@ -209,6 +209,7 @@ while True:
 
     kompressor_geht_an(0)
     
-    threading.Thread(target=bewege_drehteller(Richtung.LINKS)).start()
-
-    threading.Thread(target=fließband_an(Richtung.RAUS)).start()
+    th = Thread(target=bewege_drehteller(Richtung.LINKS))
+    th.start()
+    th1=Thread(target=fließband_an(Richtung.RAUS))
+    th1.start()
