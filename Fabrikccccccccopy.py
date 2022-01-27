@@ -3,6 +3,7 @@ from threading import Thread
 import revpimodio2
 import time
 import modules.ofen
+
 class Richtung(Enum):
     LINKS = 1
     RECHTS = 2
@@ -37,15 +38,6 @@ def ist_kran_links():
 
 def ist_kran_rechts():
     return True if revpi.io.I_6.value == 1 and revpi.io.I_3.value == 0 else False
-
-def ist_ofen_drinn():
-    return True if revpi.io.I_5.value == 1 and revpi.io.I_4.value == 0 else False
-
-def ist_ofen_draußen():
-    return True if revpi.io.I_4.value == 1 and revpi.io.I_5.value == 0 else False
-    
-def ist_ofen_draußen2():
-    return True if revpi.io.I_4.value == 1 else False
 
 def ist_fließband_sensor_durchbrochen():
     return True if revpi.io.I_8.value == 0 else False
@@ -89,14 +81,14 @@ def bewege_kran(richtung):
         revpi.io.O_7.value = 0
 
 def bewege_ofen(richtung):
-    if richtung == Richtung.REIN and ist_ofen_drinn() == False:
+    if richtung == Richtung.REIN and modules.ofen.ist_ofen_drinn() == False:
         revpi.io.O_5.value = 1
-        while ist_ofen_drinn() == False:
+        while modules.ofen.ist_ofen_drinn() == False:
             pass
         revpi.io.O_5.value = 0
-    elif richtung == Richtung.RAUS and ist_ofen_draußen() == False:
+    elif richtung == Richtung.RAUS and modules.ofen.ist_ofen_draußen() == False:
         revpi.io.O_6.value = 1
-        while ist_ofen_draußen() == False:
+        while modules.ofen.ist_ofen_draußen() == False:
             pass
         revpi.io.O_6.value = 0
 
@@ -160,14 +152,14 @@ def block_brennen():
 
 def reset_all():
     schalte_kompressor(Strom.AN)
-    if ist_ofen_draußen() == False:
+    if modules.ofen.ist_ofen_draußen() == False:
         revpi.io.O_13.value = 1
         bewege_ofen(Richtung.RAUS)
         revpi.io.O_13.value = 0
     bewege_kran(Richtung.RECHTS)
     if ist_drehteller_bei_start() == False:
         bewege_drehteller_zum_kran()
-    if ist_ofen_draußen() == True and ist_drehteller_bei_start() == True and ist_kran_rechts() == True and ist_kompressor_an() == True:
+    if modules.ofen.ist_ofen_draußen() == True and ist_drehteller_bei_start() == True and ist_kran_rechts() == True and ist_kompressor_an() == True:
         return True
 
 
@@ -180,7 +172,6 @@ while True:
     
     if reset_all() == True:
         
-
         schalte_kompressor(Strom.AN)
 
         warte_auf_block_gesetzt()
