@@ -7,5 +7,5 @@ def ist_kompressor_an():
 def schalte_kompressor(strom):
     if strom == Strom.AN and ist_kompressor_an() == False:
         revpi.io.O_10.value = 1
-    elif strom == Strom.AUS and ist_kompressor_an() == True:
+    elif strom == Strom.AUS and ist_kompressor_an():
         revpi.io.O_10.value = 0

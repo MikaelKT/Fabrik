@@ -95,9 +95,6 @@ while True:
         
         
         
-        # schritt 5 = fertigstellung
-        schalte_kompressor(Strom.AUS)
-        th = Thread(target=bewege_drehteller(Richtung.LINKS))
-        th.start()
-        th1=Thread(target=fließband_an(Richtung.RAUS))
-        th1.start()
+        bewege_drehteller(Richtung.LINKS)
+        bewege_drehteller(Richtung.LINKS)
+        fließband_an(Richtung.RAUS)
