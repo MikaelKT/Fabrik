@@ -26,7 +26,7 @@ def bewege_ofen(richtung):
         ofen_rein(Strom.AN)
         while ist_ofen_drinn() == False:
             pass
-        ofen_rein(Strom.AN)
+        ofen_rein(Strom.AUS)
     elif richtung == Richtung.RAUS and ist_ofen_draußen() == False:
         ofen_raus(Strom.AN)
         while ist_ofen_draußen() == False:
@@ -38,6 +38,7 @@ def warte_auf_block_gesetzt():
         pass
 
 def block_brennen():
+    
     ofentür(Strom.AUS)
 
     brenner(Strom.AN)
