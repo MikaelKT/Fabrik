@@ -1,174 +1,99 @@
-import threading
-import revpimodio2
+from eigenschaften.Revpi import revpi
+from eigenschaften.Richtung import Richtung
+from eigenschaften.Strom import Strom
 import time
+from module.fließband import fließband_an, fließband
+from module.kompressor import kompressor, schalte_kompressor, ist_kompressor_an
+from module.ofen import bewege_ofen, block_brennen, brenner, ist_ofen_draußen, ofentür, warte_auf_block_gesetzt, ofen_rein, ofen_raus
+from module.kran import bewege_kran, ist_kran_rechts, saugnapf, kran_links, kran_rechts, saugnapf_halterung
+from module.drehteller import bewege_drehteller, drehteller_links, ist_drehteller_bei_start, bewege_drehteller_zum_kran, pusher, drehteller_rechts
+from module.polierer import polierer
 
-revpi = revpimodio2.RevPiModIO(autorefresh = True)
+
+
 
 def turn_all_off():
-    revpi.io.O_1.value = 0
-    revpi.io.O_2.value = 0
-    revpi.io.O_3.value = 0
-    revpi.io.O_4.value = 0
-    revpi.io.O_5.value = 0
-    revpi.io.O_6.value = 0
-    revpi.io.O_7.value = 0
-    revpi.io.O_8.value = 0
-    revpi.io.O_9.value = 0
-    revpi.io.O_10.value = 0
-    revpi.io.O_11.value = 0
-    revpi.io.O_12.value = 0
-    revpi.io.O_13.value = 0
-    revpi.io.O_14.value = 0
-
-def kompressor_geht_an(value):
-    revpi.io.O_10.value = value
+    drehteller_rechts(Strom.AUS)
+    drehteller_links(Strom.AUS)
+    fließband(Strom.AUS)
+    polierer(Strom.AUS)
+    ofen_rein(Strom.AUS)
+    ofen_raus(Strom.AUS)
+    kran_links(Strom.AUS)
+    kran_rechts(Strom.AUS)
+    brenner(Strom.AUS)
+    kompressor(Strom.AUS)
+    saugnapf(Strom.AUS)
+    saugnapf_halterung(Strom.AUS)
+    ofentür(Strom.AUS)
+    pusher(Strom.AUS)
 
 
-def warte_auf_block_gesetzt():
-    while revpi.io.I_2.value == 1:
-        pass
-
-def tür_öffnen(value):
-    revpi.io.O_13.value = value
-
-def ofen_rein_fahren():
-    revpi.io.O_5.value = 1
-    while revpi.io.I_5.value == 0:
-        pass
-    revpi.io.O_5.value = 0
-
-def ofen_raus_fahren():
-    revpi.io.O_6.value = 1
-    while revpi.io.I_4.value == 0:
-        pass
-    revpi.io.O_6.value = 0
-
-def kran_links():
-    revpi.io.O_7.value = 1
-    while revpi.io.I_3.value == 0:
-        pass
-    revpi.io.O_7.value = 0
-
-def saugnapf_halter_runterfahren():
-    revpi.io.O_12.value = 1
-
-def saugnapf_halter_hochfahren():
-    revpi.io.O_12.value = 0
-
-def saugnapf_an(value):
-    revpi.io.O_11.value = value
-
-def block_brennen():
-    revpi.io.O_13.value = 0
-
-    revpi.io.O_9.value = 1
-    time.sleep(4)
-    revpi.io.O_9.value = 0
-
-    revpi.io.O_13.value = 1
-
-def kran_rechts():
-    revpi.io.O_8.value = 1
-    while revpi.io.I_6.value == 0:
-        pass
-    revpi.io.O_8.value = 0
-
-def drehteller_zur_säge_drehen():
-    revpi.io.O_1.value = 1
-    while revpi.io.I_7.value == 0:
-        pass
-    revpi.io.O_1.value = 0
-
-def polier_säge(value):
-    revpi.io.O_4.value = value
-
-def drehteller_zum_fließband_drehen():
-    revpi.io.O_1.value = 1
-    while revpi.io.I_9.value == 0:
-        pass
-    revpi.io.O_1.value = 0
-
-def pusher(value):
-    revpi.io.O_14.value = value
-
-def drehteller_zum_start_drehen():
-    revpi.io.O_2.value = 1
-    while revpi.io.I_10.value == 0:
-        pass
-    revpi.io.O_2.value = 0
-
-def fließband_an_solange_kein_block_ist():
-    revpi.io.O_3.value = 1
-    while revpi.io.I_8.value == 1:
-        pass
-    revpi.io.O_3.value = 0
 
 
+def reset_all():
+    schalte_kompressor(Strom.AN)
+    if ist_ofen_draußen() == False:
+        ofentür(Strom.AN)
+        bewege_ofen(Richtung.RAUS)
+        ofentür(Strom.AUS)
+    bewege_kran(Richtung.RECHTS)
+    if ist_drehteller_bei_start() == False:
+        bewege_drehteller_zum_kran()
+    if ist_ofen_draußen() == True and ist_drehteller_bei_start() == True and ist_kran_rechts() == True and ist_kompressor_an() == True:
+        return True
 
 
 revpi.handlesignalend(turn_all_off)
 revpi.mainloop(blocking=False)
 
+
+
 while True:
     
-    warte_auf_block_gesetzt()
+    if reset_all() == True:
+        
 
-    kompressor_geht_an(1)
-    
-    tür_öffnen(1)
+        schalte_kompressor(Strom.AN)
 
-    ofen_rein_fahren()
-
-    block_brennen()
-
-    ofen_raus_fahren()
-
-    tür_öffnen(0)
-
-    kran_links()
-
-    saugnapf_halter_runterfahren()
-
-    time.sleep(1)
-
-    saugnapf_an(1)
-    
-    time.sleep(1)
-
-    saugnapf_halter_hochfahren()
-
-    kran_rechts()
-
-    saugnapf_halter_runterfahren()
-    
-    time.sleep(1)
-
-    saugnapf_an(0)
-
-    time.sleep(1)
-    
-    saugnapf_halter_hochfahren()
-
-    time.sleep(1)
-    
-    drehteller_zur_säge_drehen()
-
-    polier_säge(1)
-    
-    time.sleep(4)
-    
-    polier_säge(0)
-
-    drehteller_zum_fließband_drehen()
-
-    pusher(1)
-
-    time.sleep(0.5)
-    
-    pusher(0)
-
-    kompressor_geht_an(0)
-    
-    threading.Thread(target=drehteller_zum_start_drehen).start()
-
-    threading.Thread(target=fließband_an_solange_kein_block_ist).start()
+        # 1 schritt = ofen
+        warte_auf_block_gesetzt()
+        ofentür(Strom.AN)
+        bewege_ofen(Richtung.REIN)
+        block_brennen()
+        bewege_ofen(Richtung.RAUS)
+        ofentür(Strom.AUS)
+        
+        # 2 schritt = transport Kran
+        bewege_kran(Richtung.LINKS)
+        saugnapf_halterung(Strom.AN)
+        time.sleep(1)
+        saugnapf(Strom.AN)
+        time.sleep(1)
+        saugnapf_halterung(Strom.AUS)
+        bewege_kran(Richtung.RECHTS)
+        saugnapf_halterung(Strom.AN)
+        time.sleep(1)
+        saugnapf(Strom.AUS)
+        time.sleep(1)
+        saugnapf_halterung(Strom.AUS)
+        time.sleep(1)
+        
+        # 3 schritt = polierung
+        bewege_drehteller(Richtung.RECHTS)
+        polierer(Strom.AN)
+        time.sleep(4)
+        polierer(Strom.AUS)
+        
+        
+        # schritt 4 = transport Teller
+        bewege_drehteller(Richtung.RECHTS)
+        pusher(Strom.AN)
+        time.sleep(0.5)
+        pusher(Strom.AUS)
+        
+        
+        
+        bewege_drehteller(Richtung.LINKS)
+        bewege_drehteller(Richtung.LINKS)
+        fließband_an(Richtung.RAUS)

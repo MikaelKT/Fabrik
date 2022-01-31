@@ -1,3 +1,4 @@
+import threading
 import revpimodio2
 import time
 
@@ -109,18 +110,7 @@ revpi.handlesignalend(turn_all_off)
 revpi.mainloop(blocking=False)
 
 while True:
-
     kompressor_geht_an(1)
-
-    revpi.io.O_13.value = 1
-    revpi.io.O_6.value = 1
-
-    revpi.io.O_8.value = 1
-    while revpi.io.I_6.value == 0:
-        pass
-    revpi.io.O_8.value = 0
-
-
 
     revpi.io.O_2.value = 1
     while revpi.io.I_10.value == 0:
