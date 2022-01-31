@@ -1,36 +1,48 @@
-from pickle import FALSE
 from eigenschaften.Richtung import Richtung
+from eigenschaften.Strom import Strom
 from eigenschaften.Revpi import revpi
 
+def pusher(strom):
+    revpi.io.O_14.value = strom.value
+
+def drehteller_rechts(strom):
+    revpi.io.O_1.value = strom.value
+
+def drehteller_links(strom):
+    revpi.io.O_2.value = strom.value
+
 def ist_drehteller_bei_start():
-    return True if revpi.io.I_10.value == 1 and revpi.io.I_7.value == 0 and revpi.io.I_9.value == 0 else False
+    return True if revpi.io.I_10.value == Strom.AN.value and revpi.io.I_7.value == Strom.AUS.value and revpi.io.I_9.value == Strom.AUS.value else False
 
 def ist_drehteller_bei_fließband():
-    return True if revpi.io.I_9.value == 1 and revpi.io.I_7.value == 0 else False
+    return True if revpi.io.I_9.value == Strom.AN.value and revpi.io.I_7.value == Strom.AUS.value else False
+
+def ist_drehteller_bei_polierer():
+    return True if revpi.io.I_7.value == Strom.AN.value and revpi.io.I_9.value == Strom.AUS.value else False
 
 def bewege_drehteller_zum_polierer():
     if ist_drehteller_bei_fließband() == False:
-        revpi.io.O_1.value = 1
+        drehteller_rechts(Strom.AN)
         while ist_drehteller_bei_polierer() == False:
             pass
-        revpi.io.O_1.value = 0
+        drehteller_rechts(Strom.AUS)
     else:
-        revpi.io.O_2.value = 1
+        drehteller_links(Strom.AN)
         while ist_drehteller_bei_polierer() == False:
             pass
-        revpi.io.O_2.value = 0
+        drehteller_links(Strom.AUS)
 
 def bewege_drehteller_zum_fließband():
-    revpi.io.O_1.value = 1
+    drehteller_rechts(Strom.AN)
     while ist_drehteller_bei_fließband() == False:
         pass
-    revpi.io.O_1.value = 0
+    drehteller_rechts(Strom.AUS)
 
 def bewege_drehteller_zum_kran():
-    revpi.io.O_2.value = 1
+    drehteller_links(Strom.AN)
     while ist_drehteller_bei_start() == False:
         pass
-    revpi.io.O_2.value = 0
+    drehteller_links(Strom.AUS)
 
 
 
@@ -46,24 +58,3 @@ def bewege_drehteller(richtung):
 
     elif ist_drehteller_bei_fließband() and richtung == Richtung.LINKS:
         bewege_drehteller_zum_polierer()
-
-def alt(richtung):
-    if richtung == Richtung.RECHTS and ist_drehteller_bei_fließband() == False:
-        if richtung == Richtung.RECHTS and ist_drehteller_bei_start() == True:
-            bewege_drehteller_zum_polierer()
-        elif richtung == Richtung.RECHTS and ist_drehteller_bei_polierer() == True:
-            bewege_drehteller_zum_fließband()
-    elif richtung == Richtung.LINKS and ist_drehteller_bei_start() == False:
-        bewege_drehteller_zum_kran()
-
-
-
-
-
-def pusher(value):
-    revpi.io.O_14.value = value
-
-
-
-def ist_drehteller_bei_polierer():
-    return True if revpi.io.I_7.value == 1 and revpi.io.I_9.value == 0 else False

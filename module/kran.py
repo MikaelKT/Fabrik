@@ -1,5 +1,18 @@
 from eigenschaften.Richtung import Richtung
 from eigenschaften.Revpi import revpi
+from eigenschaften.Strom import Strom
+
+def kran_links(strom):
+    revpi.io.O_7.value = strom.value
+
+def kran_rechts(strom):
+    revpi.io.O_8.value = strom.value
+
+def saugnapf(strom):
+    revpi.io.O_11.value = strom.value
+
+def saugnapf_halterung(strom):
+    revpi.io.O_12.value = strom.value
 
 def ist_kran_links():
     return True if revpi.io.I_3.value == 1 and revpi.io.I_6.value == 0 else False
@@ -9,24 +22,13 @@ def ist_kran_rechts():
 
 def bewege_kran(richtung):
     if richtung == Richtung.RECHTS and ist_kran_rechts() == False:
-        revpi.io.O_8.value = 1
+        kran_rechts(Strom.AN)
         while ist_kran_rechts() == False:
             pass
-        revpi.io.O_8.value = 0
+        kran_rechts(Strom.AUS)
     elif richtung == Richtung.LINKS and ist_kran_links() == False:
-        revpi.io.O_7.value = 1
+        kran_links(Strom.AN)
         while ist_kran_links() == False:
             pass
-        revpi.io.O_7.value = 0
-        
-
-
-def saugnapf_an(value):
-    revpi.io.O_11.value = value
-
-def saugnapf_halter_runterfahren():
-    revpi.io.O_12.value = 1
-
-def saugnapf_halter_hochfahren():
-    revpi.io.O_12.value = 0
+        kran_links(Strom.AUS)
 
