@@ -6,7 +6,7 @@
      * [VS Code](#First-you-install-a-development-environment-like-VS-Code)
      * [Python](#python)
 * [Updates](#updates)
-* [Definitions of functions](#Pin-definition)
+* [Pin definition](#Pin-definition)
      * [Other Functions](#other-functions)
 
 #
